@@ -339,8 +339,13 @@ function islandora_solr_prepare_solr_results($solr_results) {
             '!field' => $field,
             '!value' => islandora_solr_lesser_escape($original_value),
           ));
-          return l($formatted_value, "islandora/search/$solr_query", array(
-            'html' => TRUE,
+          return l($formatted_value, 'islandora/search', array(
+            "query" => array(
+              "type" => "dismax",
+              "f" => array(
+                $solr_query,
+              ),
+            ),
           ));
         };
         $value = array_map($map_to_link, (array) $original_value, (array) $value);
